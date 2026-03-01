@@ -18,6 +18,26 @@ Useful for:
 - Cooldown between alerts (prevents spam)  
 - Clean exit with Ctrl+C  
 - Minimal dependencies
+- Any mouse click or scroll → beep + alert message
+- Alerts are suppressed for 10 seconds after each trigger (configurable)
+
+**Example output**
+Secure Tamper Monitor running... Any button press or scroll = ALERT!
+
+Press Ctrl+C to stop.
+
+[2026-03-01 16:45:12.337] ALERT: Button.left pressed at (842, 619)
+
+!!! TAMPER ALERT !!!
+
+[2026-03-01 16:45:25.114] ALERT: Scrolled down at (842, 619)
+
+!!! TAMPER ALERT !!!
+
+^C
+
+Stopped.
+
 
 ## Requirements
 
@@ -26,3 +46,6 @@ Useful for:
 
 ```bash
 pip install pynput
+python secure_monitor.py
+
+
