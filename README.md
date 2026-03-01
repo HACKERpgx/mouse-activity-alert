@@ -38,6 +38,9 @@ Press Ctrl+C to stop.
 
 Stopped.
 
+**License**
+
+MIT License – feel free to use, modify, distribute.
 
 ## Requirements
 
