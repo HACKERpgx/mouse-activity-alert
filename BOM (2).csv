@@ -1,0 +1,12 @@
+Item,Description / Part Number,Qty,Unit Price (USD),Extended Price (USD),Buying Links
+1,ESP32-C3-MINI-1 Module,1,2.10,2.10,DigiKey: https://www.digikey.com/ | AliExpress: https://www.aliexpress.com/
+2,AMS1117-3.3 LDO Voltage Regulator,1,0.15,0.15,LCSC: https://www.lcsc.com/ | DigiKey: https://www.digikey.com/ | AliExpress: https://www.aliexpress.com/
+3,USB Type-C Receptacle (16-pin SMT),1,0.30,0.30,LCSC: https://www.lcsc.com/ | AliExpress: https://www.aliexpress.com/
+4,2-Pin JST-PH / Screw Terminal,1,0.10,0.10,AliExpress: https://www.aliexpress.com/
+5,2N7000 N-Channel MOSFET (SOT-23),1,0.08,0.08,DigiKey: https://www.digikey.com/ | LCSC: https://lcsc.com/
+6,5V Active Piezo Buzzer (Through-hole),1,0.45,0.45,Amazon: https://www.amazon.com/ | AliExpress: https://www.aliexpress.com/
+7,Red LED (0805 SMT),1,0.02,0.02,LCSC: https://www.lcsc.com/
+8,330Ω Resistor (0805),1,0.01,0.01,DigiKey: https://www.digikey.com/
+9,10µF Ceramic Capacitor (0805),2,0.03,0.06,DigiKey: https://www.digikey.com/
+10,0.1µF Decoupling Capacitor (0805),1,0.01,0.01,DigiKey: https://www.digikey.com/
+,,,,3.28,Grand Total
