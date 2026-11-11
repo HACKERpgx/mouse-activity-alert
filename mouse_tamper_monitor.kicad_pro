@@ -1,0 +1,32 @@
+# Mouse Tamper Monitor — KiCad project
+
+This project implements the requested 50 mm × 40 mm, 2-layer board concept:
+
+- ESP32-C3-MINI-1, with USB-C data/power interface
+- SW-420 digital vibration module on J2
+- Normally-closed reed/microswitch input on J3
+- 5 V active piezo buzzer BZ1 switched by Q1 (2N7000)
+- Red 0805 LED D1 driven through R1 = 330 Ω
+- AMS1117-3.3 U2 with C1 = 1 µF and C2 = 10 µF
+- Four 3.2 mm plated mounting holes on a 50 × 40 mm outline
+
+## Pin assignment
+
+| Function | ESP32-C3 pin | Board net |
+|---|---:|---|
+| SW-420 DO | GPIO4 | VIBRATION |
+| Enclosure NC switch | GPIO5 | TAMPER_NC |
+| Buzzer MOSFET gate | GPIO6 | BUZZER_EN |
+| Warning LED | GPIO7 | LED_WARN |
+| USB D- | GPIO18 | USB_D- |
+| USB D+ | GPIO19 | USB_D+ |
+
+## Important engineering notes
+
+1. The USB-C receptacle requires two 5.1 kΩ Rd resistors from CC1 and CC2 to GND for a USB device design. Add these during final schematic review if the connector footprint exposes CC pins.
+2. The AMS1117 has a relatively high dropout and USB VBUS is nominally 5 V; verify thermal dissipation and output stability for the expected sensor/buzzer current. A 3.3 V buck/LDO with the recommended capacitors may be preferable in production.
+3. The buzzer must have its negative terminal at the Q1 drain and its positive terminal at +5V. Add a flyback diode only if the selected buzzer is inductive rather than piezoelectric.
+4. Confirm the ESP32-C3-MINI-1 module pin numbering against the exact vendor land pattern before fabrication.
+5. The included `.sch` file is an import fallback containing the complete design notes; the `.kicad_sch` file is a minimal project schematic container and should be opened alongside the PCB for final symbol placement/routing in KiCad.
+
+Generated as a starting point for review; run KiCad ERC/DRC and verify all footprints against manufacturer datasheets before ordering.

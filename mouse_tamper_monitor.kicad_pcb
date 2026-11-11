@@ -1,0 +1,24 @@
+EESchema Schematic File Version 4
+LIBS:power
+LIBS:device
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+Sheet 1 1
+Title "Mouse Tamper Monitor"
+Comment1 "ESP32-C3-MINI-1 / USB-C / dual tamper detection"
+Comment2 "5V buzzer MOSFET driver and red warning LED"
+$EndDescr
+Text Notes 900 900 0 120 ~ 24
+MOUSE TAMPER MONITOR
+Text Notes 900 1200 0 60 ~ 12
+USB-C 5V input -> AMS1117-3.3 -> ESP32-C3-MINI-1
+Text Notes 900 1500 0 60 ~ 12
+SW-420 digital output: GPIO4; NC enclosure switch: GPIO5 with pull-up
+Text Notes 900 1800 0 60 ~ 12
+GPIO6 -> 2N7000 gate -> 5V active buzzer; GPIO7 -> 330R -> red LED
+Text Notes 900 2200 0 60 ~ 12
+J1 USB-C: VBUS +5V, CC1/CC2 each 5.1k to GND, D-/D+ to GPIO18/GPIO19
+Text Notes 900 2500 0 60 ~ 12
+C1 1uF and C2 10uF from +5V to GND; 100nF local bypass at U1/U2 recommended
+$EndSCHEMATC
