@@ -51,4 +51,6 @@ MIT License – feel free to use, modify, distribute.
 pip install pynput
 python secure_monitor.py
 
+<img width="772" height="562" alt="running secure_monitor" src="https://github.com/user-attachments/assets/03fb29c1-f5a7-44fb-a3f8-89c91afd2c8a" />
 
+<img width="552" height="440" alt="Tamper alert logs" src="https://github.com/user-attachments/assets/662e6969-8852-451b-bc30-89de3d972e0c" />
