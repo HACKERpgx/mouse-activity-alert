@@ -38,6 +38,9 @@ Press Ctrl+C to stop.
 
 Stopped.
 
+<img width="772" height="562" alt="running secure_monitor" src="https://github.com/user-attachments/assets/cb4005f6-3f0b-40e9-b0ee-6f047be49baf" />
+<img width="552" height="440" alt="Tamper alert logs" src="https://github.com/user-attachments/assets/46474713-7faa-4753-a172-1669e6a5cea6" />
+
 **License**
 
 MIT License – feel free to use, modify, distribute.
@@ -50,7 +53,3 @@ MIT License – feel free to use, modify, distribute.
 ```bash
 pip install pynput
 python secure_monitor.py
-
-<img width="772" height="562" alt="running secure_monitor" src="https://github.com/user-attachments/assets/03fb29c1-f5a7-44fb-a3f8-89c91afd2c8a" />
-
-<img width="552" height="440" alt="Tamper alert logs" src="https://github.com/user-attachments/assets/662e6969-8852-451b-bc30-89de3d972e0c" />
