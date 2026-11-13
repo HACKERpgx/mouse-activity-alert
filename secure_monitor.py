@@ -11,22 +11,21 @@ try:
     import pyttsx3
 except ImportError:
     print("Error: 'pyttsx3' library not found.")
-    print("Install it with: pip install pyttsx3")
+    print("Install it with: py -m pip install pyttsx3 pynput")
     sys.exit(1)
-
-# Initialize the Text-to-Speech engine
-engine = pyttsx3.init()
 
 # CONFIG
 ALERT_COOLDOWN = 5  # seconds between voice alerts
-
 last_alert = 0
 
 def speak_alert(message):
     print(message)
     try:
-        engine.say(message)
-        engine.runAndWait()
+        # Re-initialize engine each time to avoid 'run loop already started' state errors
+        local_engine = pyttsx3.init()
+        local_engine.say(message)
+        local_engine.runAndWait()
+        local_engine.stop()
     except Exception as e:
         print(f"TTS Error: {e}")
 
