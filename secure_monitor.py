@@ -1,9 +1,11 @@
 """
-Mouse Tamper Monitor with Voice Alerts
-Detects clicks and scrolls -> speaks alert + logs event
+Mouse Tamper Monitor with Threaded Voice Alerts
+Detects clicks and scrolls -> queues speech + logs event without blocking
 """
 import sys
-import platform
+import time
+import queue
+import threading
 from datetime import datetime
 from pynput import mouse
 
@@ -14,27 +16,45 @@ except ImportError:
     print("Install it with: py -m pip install pyttsx3 pynput")
     sys.exit(1)
 
+# Thread-safe speech queue
+speech_queue = queue.Queue()
+
+def tts_worker():
+    """Dedicated background thread for pyttsx3 to prevent blocking and COM errors."""
+    try:
+        engine = pyttsx3.init()
+    except Exception as e:
+        print(f"TTS Init Error: {e}")
+        return
+
+    while True:
+        message = speech_queue.get()
+        if message is None:
+            break
+        try:
+            engine.say(message)
+            engine.runAndWait()
+        except Exception as e:
+            print(f"TTS Speech Error: {e}")
+        finally:
+            speech_queue.task_done()
+
+# Start background speech thread
+worker_thread = threading.Thread(target=tts_worker, daemon=True)
+worker_thread.start()
+
 # CONFIG
-ALERT_COOLDOWN = 5  # seconds between voice alerts
+ALERT_COOLDOWN = 3  # seconds between voice alerts
 last_alert = 0
 
 def speak_alert(message):
-    print(message)
-    try:
-        # Re-initialize engine each time to avoid 'run loop already started' state errors
-        local_engine = pyttsx3.init()
-        local_engine.say(message)
-        local_engine.runAndWait()
-        local_engine.stop()
-    except Exception as e:
-        print(f"TTS Error: {e}")
+    speech_queue.put(message)
 
 def on_click(x, y, button, pressed):
     global last_alert
     if not pressed:
         return
 
-    import time
     now = time.time()
     if now - last_alert < ALERT_COOLDOWN:
         return
@@ -42,9 +62,9 @@ def on_click(x, y, button, pressed):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
     
     if button == mouse.Button.left:
-        msg = f"Left mouse button triggered! Tamper alert!"
+        msg = "Left mouse button triggered! Tamper alert!"
     elif button == mouse.Button.right:
-        msg = f"Right mouse button clicked! Security breach!"
+        msg = "Right mouse button clicked! Security breach!"
     else:
         msg = f"Mouse button pressed at ({x}, {y})"
 
@@ -54,7 +74,6 @@ def on_click(x, y, button, pressed):
 
 def on_scroll(x, y, dx, dy):
     global last_alert
-    import time
     now = time.time()
     if now - last_alert < ALERT_COOLDOWN:
         return
@@ -68,7 +87,7 @@ def on_scroll(x, y, dx, dy):
     last_alert = now
 
 # ────────────────────────────────────────
-print("Secure Tamper Monitor with Voice Active...")
+print("Secure Tamper Monitor with Threaded Voice Active...")
 print("→ Any mouse click or scroll will speak an alert!")
 print("→ Press Ctrl+C to stop.\n")
 
@@ -77,6 +96,7 @@ try:
         listener.join()
 except KeyboardInterrupt:
     print("\nStopped.")
+    speech_queue.put(None)
 except Exception as e:
     print(f"\nError: {e}")
     sys.exit(1)
