@@ -13,14 +13,20 @@ try:
     import pyttsx3
 except ImportError:
     print("Error: 'pyttsx3' library not found.")
-    print("Install it with: py -m pip install pyttsx3 pynput")
+    print("Install it with: py -m pip install pyttsx3 pywin32 pynput")
     sys.exit(1)
 
 # Thread-safe speech queue
 speech_queue = queue.Queue()
 
 def tts_worker():
-    """Dedicated background thread for pyttsx3 to prevent blocking and COM errors."""
+    """Dedicated background thread for pyttsx3 with Windows COM initialization."""
+    try:
+        import pythoncom
+        pythoncom.CoInitialize()
+    except Exception:
+        pass
+
     try:
         engine = pyttsx3.init()
     except Exception as e:
@@ -38,6 +44,11 @@ def tts_worker():
             print(f"TTS Speech Error: {e}")
         finally:
             speech_queue.task_done()
+
+    try:
+        pythoncom.CoUninitialize()
+    except Exception:
+        pass
 
 # Start background speech thread
 worker_thread = threading.Thread(target=tts_worker, daemon=True)
